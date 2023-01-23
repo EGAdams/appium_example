@@ -1,28 +1,3 @@
-// import needed dependencies
-// const { AppiumDriver } = require('webdriverio');
-
-// const opts = {
-//   path: '/wd/hub',
-//   port: 4723,
-//   capabilities: {
-//     platformName: "Android",
-//     platformVersion: "8",
-//     deviceName: "Android Emulator",
-//     app: "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk",
-//     appPackage: "io.appium.android.apis",
-//     appActivity: ".view.TextFields",
-//     automationName: "UiAutomator2"
-//   }
-// };
-
-// async function main () {
-//   const driver = await AppiumDriver.newSession( opts );
-
-//   await driver.deleteSession();
-// }
-
-// webdriverio as W3C capabilities
-
 const wdio = require("webdriverio");
 const assert = require("assert");
 
@@ -30,9 +5,10 @@ console.log( "Starting test");
 const opts = {
   path: '/wd/hub',
   port: 4723,
+  hostname: '0.0.0.0',
   capabilities: {
     platformName: "Android",
-    platformVersion: "8",
+    platformVersion: "10",
     "appium:deviceName": "R58MC1M2H9P",
     "appium:app": "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk",
     "appium:appPackage": "com.awm.mcba.floridascarwash",
@@ -52,4 +28,5 @@ async function main () {
 
   await client.deleteSession();
 }
+
 main();
