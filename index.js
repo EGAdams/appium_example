@@ -1,30 +1,55 @@
-//
-//
-//
-const webdriver = require( 'selenium-webdriver' );
-const assert = require( 'assert' );
-const By = webdriver.By;
+// import needed dependencies
+// const { AppiumDriver } = require('webdriverio');
 
-const capabilities = {
-	platformName: "Android",
-	platformVersion: "8.0",
-	deviceName: "Android Emulator",
-	app: "C:/Users/EG/Downloads/ApiDemos-debug.apk",
-	appPackage: "io.appium.android.apis",
-	appActivity: ".view.TextFields",
-	automationName: "UiAutomator2"
+// const opts = {
+//   path: '/wd/hub',
+//   port: 4723,
+//   capabilities: {
+//     platformName: "Android",
+//     platformVersion: "8",
+//     deviceName: "Android Emulator",
+//     app: "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk",
+//     appPackage: "io.appium.android.apis",
+//     appActivity: ".view.TextFields",
+//     automationName: "UiAutomator2"
+//   }
+// };
+
+// async function main () {
+//   const driver = await AppiumDriver.newSession( opts );
+
+//   await driver.deleteSession();
+// }
+
+// webdriverio as W3C capabilities
+
+const wdio = require("webdriverio");
+const assert = require("assert");
+
+console.log( "Starting test");
+const opts = {
+  path: '/wd/hub',
+  port: 4723,
+  capabilities: {
+    platformName: "Android",
+    platformVersion: "8",
+    "appium:deviceName": "R58MC1M2H9P",
+    "appium:app": "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk",
+    "appium:appPackage": "com.awm.mcba.floridascarwash",
+    "appium:appActivity": "MainActivity",
+    "appium:automationName": "UiAutomator2"
+  }
 };
 
-const driver = new webdriver.Builder().forBrowser( 'chrome' )
-	.usingServer( 'http://localhost:4723/wd/hub' )
-	.withCapabilities( capabilities )
-	.build();
+async function main () {
+  console.log("inside main");
+  const client = await wdio.remote(opts);
 
-driver.findElement( By.id( 'android.widget.EditText' ) ).sendKeys( 'Hello World!' );
+  const field = await client.$("com.awm.mcba.floridascarwash.MainActivity");
+  await field.setValue("Hello World!");
+  const value = await field.getText();
+  assert.strictEqual(value,"Hello World!");
 
-driver.findElement( By.id( 'android.widget.EditText' ) ).getText().then( function ( value ) {
-	assert.equal( value, 'Hello World!' );
-});
-
-driver.quit();
-
+  await client.deleteSession();
+}
+main();
