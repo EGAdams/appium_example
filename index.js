@@ -1,6 +1,9 @@
 /*
   This will open the car wash app and click on the chat button
 */
+
+const spawn = require( 'child_process' ).spawn;
+
 class AutomationExpert {
 	constructor( wdio ) {
 		this.wdio = wdio;
@@ -23,6 +26,14 @@ class AutomationExpert {
 	}
 
 	async openCarWashAppAndClickChatButton () {
+        const script = spawn('bash', ['./clean_all_but_admin.sh']);
+
+        script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
+
+        script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
+
+        script.on('close', (code) => { console.log(`child process exited with code ${code}`); });
+
 		const client = await this.wdio.remote( this.opts );
 		let contexts = await client.getContexts();
 		await client.switchContext( contexts[ 1 ] ); // switch to webview
