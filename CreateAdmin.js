@@ -1,17 +1,11 @@
-/*
-  This will open the car wash app and click on the chat button
-*/
-const CreateAdmin = require( './CreateAdmin' );
+//
+//
 const spawn = require( 'child_process' ).spawn;
 const java_class = "com.awm.mcba.floridascarwash";
 const device_name = "R58MC1M2H9P";
-// const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk";
 const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\app\\build\\outputs\\apk\\release\\app-release.apk";
-// const java_class = "com.awm.mcba.basecopy";
-// const device_name = "R58MC1M2H9P";
-// const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\baseparent\\app\\build\\outputs\\apk\\release\\app-release.apk";
 
-class AutomationExpert {
+class CreateAdmin {
 	constructor( wdio ) {
 		this.wdio = wdio;
 		this.opts = {
@@ -32,12 +26,11 @@ class AutomationExpert {
 		};
 	}
 
-	async createTestUser() {
+	async execute() {
+		const FIRST_NAME = "Steve"
+		const LAST_NAME  = "Austin"
+        const EMAIL      = "steve@gmail.com"
         const PASSWORD   = "princess"
-		const FIRST_NAME = "Giz"
-		const LAST_NAME  = "Elle"
-        const EMAIL      = "giz@gmail.com"
-
         const script = spawn('bash', ['./clean_all_but_admin.sh']);
         script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
         script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
@@ -70,9 +63,4 @@ class AutomationExpert {
 	}
 }
 
-const wdio = require( "webdriverio" );
-// const adminCreator = new CreateAdmin( wdio );
-// adminCreator.execute();
-
-const automationExpert = new AutomationExpert( wdio );
-automationExpert.createTestUser();
+module.exports = CreateAdmin;
