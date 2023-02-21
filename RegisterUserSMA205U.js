@@ -27,20 +27,20 @@ class RegisterUserSMA205U {
 		};
 	}
 
-	async execute() {
+	async execute () {
 		const FIRST_NAME = "Giz"
-		const LAST_NAME  = "Elle"
-        const EMAIL      = "giz@gmail.com"
-        const PASSWORD   = "princess"
-		
+		const LAST_NAME = "Elle"
+		const EMAIL = "giz@gmail.com"
+		const PASSWORD = "princess"
+
 		console.log( "cleaning all users but admin..." );
-        const script = spawn('bash', ['./clean_all_but_admin.sh']);
-        script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
-        script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
-        script.on('close', (code) => { console.log(`child process exited with code ${code}`); });
+		const script = spawn( 'bash', [ './clean_all_but_admin.sh' ] );
+		script.stdout.on( 'data', ( data ) => { console.log( `stdout: ${data}` ); } );
+		script.stderr.on( 'data', ( data ) => { console.error( `stderr: ${data}` ); } );
+		script.on( 'close', ( code ) => { console.log( `child process exited with code ${code}` ); } );
 
 		const client = await this.wdio.remote( this.opts );
-		let contexts = await client. getContexts();
+		let contexts = await client.getContexts();
 		await client.switchContext( contexts[ 1 ] ); // switch to webview
 		const chatButton = await client.$( '//*[@class="mcba_button fas fa-comments"]' );
 		await chatButton.click();
@@ -60,7 +60,7 @@ class RegisterUserSMA205U {
 		// click button with id "email_create_account_button"
 		const create_account_button = await client.$( '//*[@resource-id="' + java_class + ':id/email_create_account_button"]' );
 		await create_account_button.click();
-		
+
 		await client.pause( 30000 );
 		//await client.deleteSession();
 	}

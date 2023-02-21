@@ -75,4 +75,4 @@ class AutomationExpert {
 const wdio = require( "webdriverio" );
 // const adminCreator     = new CreateAdmin(      wdio ); adminCreator.execute();
 // const automationExpert = new AutomationExpert( wdio ); automationExpert.createTestUser();
-const registerNewUser = new RegisterUserSMA205U( wdio ); registerNewUser.execute();
+const registerNewUser = new RegisterUser( wdio ); registerNewUser.execute();
