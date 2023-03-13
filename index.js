@@ -47,7 +47,14 @@ class AutomationExpert {
         script.on('close', (code) => { console.log(`child process exited with code ${code}`); });
 
 		const client = await this.wdio.remote( this.opts );
+		
 		let contexts = await client. getContexts();
+		// if the type of contexts[ 1 ] is NOT a string
+		if ( typeof contexts[ 1 ] !== "string" ) {
+			console.log( "contexts[ 0 ] is null" );
+			console.log( "*** please put a breakpoint here until we find a way to wait for the app to load. ***" );
+			return;
+		}
 		await client.switchContext( contexts[ 1 ] ); // switch to webview
 		const chatButton = await client.$( '//*[@class="mcba_button fas fa-comments"]' );
 		await chatButton.click();

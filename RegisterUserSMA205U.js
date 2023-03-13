@@ -4,7 +4,10 @@
 const spawn = require( 'child_process' ).spawn;
 const java_class = "com.awm.mcba.floridascarwash";
 const device_name = "R58MC1M2H9P";
-const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\app\\build\\outputs\\apk\\release\\app-release.apk";
+// const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\app\\build\\outputs\\apk\\release\\app-release.apk";
+// get the current directory
+const path = require( 'path' );
+const app_path = path.resolve( __dirname, 'app-release.apk' );
 
 class RegisterUserSMA205U {
 	constructor( wdio ) {
@@ -41,6 +44,11 @@ class RegisterUserSMA205U {
 
 		const client = await this.wdio.remote( this.opts );
 		let contexts = await client.getContexts();
+		if ( typeof contexts[ 1 ] !== "string" ) {
+			console.log( "contexts[ 0 ] is null" );
+			console.log( "*** please put a breakpoint at \"let contexts... \" until we find a way to wait for the app to load. ***" );
+			return;
+		}
 		await client.switchContext( contexts[ 1 ] ); // switch to webview
 		const chatButton = await client.$( '//*[@class="mcba_button fas fa-comments"]' );
 		await chatButton.click();
