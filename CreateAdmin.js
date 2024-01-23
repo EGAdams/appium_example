@@ -11,7 +11,7 @@ class CreateAdmin {
 		this.opts = {
 			path: '/wd/hub',
 			port: 4723,
-			hostname: '0.0.0.0',
+			hostname: 'localhost',
 			capabilities: {
 				platformName: "Android",
 				platformVersion: "11",

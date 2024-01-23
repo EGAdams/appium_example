@@ -4,14 +4,13 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "node test.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "chromedriver": "^109.0.0",
-      "webdriverio": "^5.16.15"
+        "chromedriver": "^120.0.2",
+        "webdriverio": "^8.29.0"
     }
-  }
-  
+}

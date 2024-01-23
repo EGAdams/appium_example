@@ -6,10 +6,10 @@ const RegisterUser = require( './RegisterUserSMA205U' );
 const spawn = require( 'child_process' ).spawn;
 
 const java_class = "com.awm.mcba.floridascarwash";
-const device_name = "R58MC1M2H9P";
+const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
 // const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk";
 // const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\app\\build\\outputs\\apk\\release\\app-release.apk";
-const app_path = "./app-release.apk";
+const app_path = "C:\\Android\\app-debug.apk"; // move this from the build folder to this directory
 // const java_class = "com.awm.mcba.basecopy";
 // const device_name = "R58MC1M2H9P";
 // const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\baseparent\\app\\build\\outputs\\apk\\release\\app-release.apk";
@@ -20,18 +20,18 @@ class AutomationExpert {
 		this.opts = {
 			path: '/wd/hub',
 			port: 4723,
-			hostname: '0.0.0.0',
+			hostname: '127.0.0.1',
 			capabilities: {
-				platformName: "Android",
-				platformVersion: "11",
-				"appium:deviceName": device_name,
-				"appium:app": app_path,
-				"appium:appPackage": java_class,
-				"appium:appActivity": "MainActivity",
-				"appium:automationName": "UiAutomator2",
-				"appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
-				"appium:newCommandTimeout": 60000,
-			}
+                platformName: "Android",
+                "appium:platformVersion": "10", // Updated from platformVersion
+                "appium:deviceName": device_name,
+                "appium:app": app_path,
+                "appium:appPackage": java_class,
+                "appium:appActivity": "MainActivity",
+                "appium:automationName": "UiAutomator2",
+                "appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
+                "appium:newCommandTimeout": 60000,
+            }
 		};
 	}
 
@@ -41,10 +41,11 @@ class AutomationExpert {
 		const LAST_NAME  = "Elle"
         const EMAIL      = "giz@gmail.com"
 
-        const script = spawn('bash', ['./clean_all_but_admin.sh']);
-        script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
-        script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
-        script.on('close', (code) => { console.log(`child process exited with code ${code}`); });
+        // const script = spawn('bash', ['./clean_all_but_admin.sh']);
+        // script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
+        // script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
+        // script.on('close', (code) => { 
+        //     console.log(`child process exited with code ${code}`); });
 
 		const client = await this.wdio.remote( this.opts );
 		let contexts = await client. getContexts();
