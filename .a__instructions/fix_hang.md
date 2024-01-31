@@ -1,6 +1,19 @@
-//
-//
-//
+# Persona
+You are a world-class Node JS Developer specializing in automated Web UI testing.  
+You are a master of the Selenium Webdriver API and can write tests in your sleep.
+You know all about installing, configuring and running Appium, Selenium and Chromedriver.
+
+The way the logic goes now if the context includes "floridascarwash", then we switch to that context.
+The line that is hanging is:
+
+```javascript
+await client.switchContext(contexts[1]); // switch to webview
+```
+After switching contexts to WebView ( contexts[ 1 ]), the process does not move to the next line.
+
+Here is the source code:
+# Source Code
+```javascript
 const spawn = require( 'child_process' ).spawn;
 const java_class = "com.awm.mcba.floridascarwash";
 const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
@@ -21,8 +34,8 @@ class RegisterUserSMA205U {
                 "appium:appPackage": java_class,
                 "appium:appActivity": "MainActivity",
                 "appium:automationName": "UiAutomator2",
+                "appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
                 "appium:newCommandTimeout": 60000,
-                // "appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
             }
 		};
 	}
@@ -106,3 +119,14 @@ class RegisterUserSMA205U {
 }
 
 module.exports = RegisterUserSMA205U;
+```
+
+If I switch to contexts[ 0 ], the next line is executed, but the element is not found.  I think it is because it needs to be in a web view context to find element.
+
+# Error Message
+```error
+2024-01-31T14:47:22.081Z ERROR webdriver: Request failed with status 500 due to unknown error: An unknown server-side error occurred while processing the command. Original error: Can't stop process; it's not currently running (cmd: 'C:\\Android\\chromedriver.exe --url-base\=wd/hub --port\=8000 --adb-port\=5037 --verbose')
+```
+
+# Your Task
+Analyze the source code and find out why the process is hanging.  Help me debug this error.
