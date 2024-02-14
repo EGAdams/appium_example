@@ -1,0 +1,15 @@
+//
+
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch index.js",
+        "program": "${workspaceFolder}/index.js",
+        "runtimeExecutable": "/home/adamsl/.nvm/versions/node/v21.6.1/bin/node" // Adjust this path to where Node.js is installed on your system
+      }
+    ]
+  }
+  

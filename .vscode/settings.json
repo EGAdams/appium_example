@@ -1,13 +1,14 @@
 {
-	"cSpell.words": [
-		"appium",
-		"Automator",
-		"basecopy",
-		"baseparent",
-		"chromedriverExecutable",
-		"Elle",
-		"floridascarwash",
-		"wdio",
-		"webdriverio"
-	]
+    "cSpell.words": [
+        "appium",
+        "Automator",
+        "basecopy",
+        "baseparent",
+        "chromedriverExecutable",
+        "Elle",
+        "floridascarwash",
+        "tcpip",
+        "wdio",
+        "webdriverio"
+    ]
 }

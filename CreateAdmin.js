@@ -3,7 +3,7 @@
 const spawn = require( 'child_process' ).spawn;
 const java_class = "com.awm.mcba.floridascarwash";
 const device_name = "R58MC1M2H9P";
-const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\app\\build\\outputs\\apk\\release\\app-release.apk";
+const app_path = "C:\\Android\\app-release-unsigned.apk";
 
 class CreateAdmin {
 	constructor( wdio ) {
@@ -11,18 +11,20 @@ class CreateAdmin {
 		this.opts = {
 			path: '/wd/hub',
 			port: 4723,
-			hostname: 'localhost',
+			hostname: '0.0.0.0',
 			capabilities: {
-				platformName: "Android",
-				platformVersion: "11",
-				"appium:deviceName": device_name,
-				"appium:app": app_path,
-				"appium:appPackage": java_class,
-				"appium:appActivity": "MainActivity",
-				"appium:automationName": "UiAutomator2",
-				"appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
-				"appium:newCommandTimeout": 60000,
-			}
+                platformName: "Android",
+                "appium:platformVersion": "12", // Corrected capability name
+                "appium:deviceName": device_name,
+                "appium:app": app_path,
+                "appium:appPackage": java_class,
+                "appium:appActivity": "MainActivity",
+                "appium:automationName": "UiAutomator2",
+                "appium:newCommandTimeout": 60000,
+                "appium:chromedriverAutoDownload": true
+                // "appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
+            }
+            
 		};
 	}
 
@@ -31,13 +33,14 @@ class CreateAdmin {
 		const LAST_NAME  = "Austin"
         const EMAIL      = "steve@gmail.com"
         const PASSWORD   = "princess"
-        const script = spawn('bash', ['./clean_all_but_admin.sh']);
-        script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
-        script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
-        script.on('close', (code) => { console.log(`child process exited with code ${code}`); });
+        // const script = spawn('bash', ['./clean_all_but_admin.sh']);
+        // script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
+        // script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
+        // script.on('close', (code) => { console.log(`child process exited with code ${code}`); });
 
 		const client = await this.wdio.remote( this.opts );
 		let contexts = await client. getContexts();
+		await client.switchContext( contexts[ 0 ] );	// switch to native context
 		await client.switchContext( contexts[ 1 ] ); // switch to webview
 		const chatButton = await client.$( '//*[@class="mcba_button fas fa-comments"]' );
 		await chatButton.click();

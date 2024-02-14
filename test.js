@@ -1,38 +1,38 @@
-//
-// Description: This file contains the test cases for the Florida Car Wash app.
-const webdriverio = require( 'webdriverio' );
-// const wdio = webdriverio.remote();
+const {remote} = require('webdriverio');
 
-const AppOpener = require('./AppOpener');
+const java_class = "com.awm.mcba.floridascarwash";
+const device_name = "R58MC1M2H9P";
+const app_path = "C:\\Android\\app-release-unsigned.apk";
 
-const opts = {
-	path: '/wd/hub',
-	port: 4723,
-	hostname: 'localhost',
-	capabilities: {
-        "appium:platformName": "Android",
-		"appium:platformVersion": "10",
-		"appium:deviceName": "R58R1207VAT", // "R58MC1M2H9P",
-		"appium:app": "./app-debug.apk",
-		"appium:appPackage": "com.awm.mcba.floridascarwash",
-		"appium:appActivity": "MainActivity",
-		"appium:automationName": "UiAutomator2",
-		"appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
-        "appium:chromedriverAutoDownload": true, // Add this line
-		"appium:newCommandTimeout": 60000,
-	}
+const capabilities = {
+    platformName: "Android",
+    "appium:platformVersion": "12", // Corrected capability name
+    "appium:deviceName": device_name,
+    "appium:app": app_path,
+    "appium:appPackage": java_class,
+    "appium:appActivity": "MainActivity",
+    "appium:automationName": "UiAutomator2",
+    "appium:newCommandTimeout": 60000,
+    "appium:chromedriverAutoDownload": true
+    // "appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
 };
 
-const client = await webdriverio.remote( opts );
+const wdOpts = {
+  hostname: process.env.APPIUM_HOST || '0.0.0.0',
+  port: parseInt(process.env.APPIUM_PORT, 10) || 4723,
+  logLevel: 'info',
+  capabilities,
+};
 
-( async function test () {
-    const appOpener = new AppOpener(client);
-    await appOpener.openCarWashAppAndClickChatButton();
+async function runTest() {
+  const driver = await remote(wdOpts);
+  try {
+    const batteryItem = await driver.$('//*[@text="Battery"]');
+    await batteryItem.click();
+  } finally {
+    await driver.pause(1000);
+    await driver.deleteSession();
+  }
+}
 
-    const formFiller = new FormFiller(client);
-    await formFiller.fillAndSubmitRegistrationForm("Hans", "Schulz", "hans@gmail.com", "princess");
-
-    await client.pause(10000);
-    await client.deleteSession();
-})();
-
+runTest().catch(console.error);

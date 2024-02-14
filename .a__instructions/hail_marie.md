@@ -1,7 +1,17 @@
+# Persona
+You are a world-class Node JS Developer specializing in automated Web UI testing.
+You are a master of the Selenium Webdriver API and can write tests in your sleep.
+You are an expert at using chromedriver in Android WebViews.
+
+
+The following Node JS application successfully starts an Android application that appears to be loading it's WebView normally.  The problem is that the application hangs after switching to the WebView context.
+
+# Source Code
+```javascript
 const spawn = require( 'child_process' ).spawn;
 const java_class = "com.awm.mcba.floridascarwash";
 const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
-const app_path = "C:\\Android\\app-release.apk";
+const app_path = "C:\\Android\\app-debug.apk";
 
 class RegisterUserSMA205U {
 	constructor( wdio ) {
@@ -81,5 +91,8 @@ class RegisterUserSMA205U {
         } catch ( error ) { console.error( 'Error occurred:', error );}
 	}
 }
-
 module.exports = RegisterUserSMA205U;
+```
+
+# Your Task
+Write a Python appium server that will allow the above Node JS application to successfully switch to the WebView context and click on the chat button.
