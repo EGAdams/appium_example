@@ -1,6 +1,7 @@
 const spawn = require( 'child_process' ).spawn;
 const java_class = "com.awm.mcba.floridascarwash";
-const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
+// const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
+const device_name = "SM-A515U";
 const app_path = "C:\\Android\\app-release.apk";
 
 class RegisterUserSMA205U {

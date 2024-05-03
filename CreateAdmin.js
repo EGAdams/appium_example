@@ -1,9 +1,10 @@
 //
+// C:\Users\EG\appium_example>"c:\Users\EG\AppData\Local\Programs\Microsoft VS Code\bin\code" .
 //
 const spawn = require( 'child_process' ).spawn;
 const java_class = "com.awm.mcba.floridascarwash";
 const device_name = "R58MC1M2H9P";
-const app_path = "C:\\Android\\app-release-unsigned.apk";
+const app_path = "C:\\Android\\app-release.apk";
 
 class CreateAdmin {
 	constructor( wdio ) {
@@ -40,9 +41,9 @@ class CreateAdmin {
 
 		const client = await this.wdio.remote( this.opts );
 		let contexts = await client. getContexts();
-		await client.switchContext( contexts[ 0 ] );	// switch to native context
+		await client.switchContext( contexts[ 0 ] ); // switch to native context
 		await client.switchContext( contexts[ 1 ] ); // switch to webview
-		const chatButton = await client.$( '//*[@class="mcba_button fas fa-comments"]' );
+		const chatButton = await client.$( '//*[@class="mcba_button"]' );
 		await chatButton.click();
 		await client.switchContext( contexts[ 0 ] );	// switch to native context
 

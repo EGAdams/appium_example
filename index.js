@@ -1,19 +1,22 @@
 /*
   This will open the car wash app and click on the chat button
+  // C:\Users\EG\appium_example>"c:\Users\EG\AppData\Local\Programs\Microsoft VS Code\bin\code" .
 */
 const CreateAdmin = require(  './CreateAdmin'         );
 const RegisterUser = require( './RegisterUserSMA205U' );
 const spawn = require( 'child_process' ).spawn;
 
 const java_class = "com.awm.mcba.floridascarwash";
-const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
+// const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
+const device_name = "SM-A515U";
 // const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk";
 // const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\app\\build\\outputs\\apk\\release\\app-release.apk";
 // const app_path = "C:\\Android\\app-debug.apk"; // move this from the build folder to this directory
 // const java_class = "com.awm.mcba.basecopy";
 // const device_name = "R58MC1M2H9P";
 // const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\baseparent\\app\\build\\outputs\\apk\\release\\app-release.apk";
-const app_path = "C:\\Users\\EG\\Desktop\\2022\\florida_car_wash\\baseparent\\app\\build\\outputs\\apk\\release\\app-release.apk";
+const app_path = "C:\\Android\\app-release.apk";
+// const app_path = "C:\\Users\\EG\\Desktop\\2022\\florida_car_wash\\baseparent\\app\\build\\outputs\\apk\\release\\app-release.apk";
 
 class AutomationExpert {
 	constructor( wdio ) {
@@ -90,6 +93,6 @@ class AutomationExpert {
 }
 
 const wdio = require( "webdriverio" );
-const adminCreator     = new CreateAdmin(      wdio ); adminCreator.execute();
+// const adminCreator     = new CreateAdmin(      wdio ); adminCreator.execute();
 // const automationExpert = new AutomationExpert( wdio ); automationExpert.createTestUser();
-// const registerNewUser = new RegisterUser( wdio ); registerNewUser.execute();
+const registerNewUser = new RegisterUser( wdio ); registerNewUser.execute();
