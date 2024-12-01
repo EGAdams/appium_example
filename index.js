@@ -7,16 +7,8 @@ const RegisterUser = require( './RegisterUserSMA205U' );
 const spawn = require( 'child_process' ).spawn;
 
 const java_class = "com.awm.mcba.floridascarwash";
-// const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
-const device_name = "SM-A515U";
-// const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\release\\app-release.apk";
-// const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\floridascarwash\\app\\build\\outputs\\apk\\release\\app-release.apk";
-// const app_path = "C:\\Android\\app-debug.apk"; // move this from the build folder to this directory
-// const java_class = "com.awm.mcba.basecopy";
-// const device_name = "R58MC1M2H9P";
-// const app_path = "C:\\Users\\EG\\AndroidStudioProjects\\baseparent\\app\\build\\outputs\\apk\\release\\app-release.apk";
-const app_path = "C:\\Android\\app-release.apk";
-// const app_path = "C:\\Users\\EG\\Desktop\\2022\\florida_car_wash\\baseparent\\app\\build\\outputs\\apk\\release\\app-release.apk";
+const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
+const app_path = "C:\\Users\\NewUser\\Desktop\\Android_Source\\AndroidBase\\app\\build\\outputs\\apk\\debug\\app-debug.apk"
 
 class AutomationExpert {
 	constructor( wdio ) {
@@ -44,12 +36,6 @@ class AutomationExpert {
 		const FIRST_NAME = "Giz"
 		const LAST_NAME  = "Elle"
         const EMAIL      = "giz@gmail.com"
-
-        // const script = spawn('bash', ['./clean_all_but_admin.sh']);
-        // script.stdout.on('data', (data) => { console.log(`stdout: ${data}`); });
-        // script.stderr.on('data', (data) => { console.error(`stderr: ${data}`); });
-        // script.on('close', (code) => { 
-        //     console.log(`child process exited with code ${code}`); });
 
 		const client = await this.wdio.remote(this.opts);
         let contexts = await client.getContexts();
@@ -94,5 +80,4 @@ class AutomationExpert {
 
 const wdio = require( "webdriverio" );
 // const adminCreator     = new CreateAdmin(      wdio ); adminCreator.execute();
-// const automationExpert = new AutomationExpert( wdio ); automationExpert.createTestUser();
-const registerNewUser = new RegisterUser( wdio ); registerNewUser.execute();
+const automationExpert = new AutomationExpert( wdio ); automationExpert.createTestUser();
