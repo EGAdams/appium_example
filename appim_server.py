@@ -3,7 +3,8 @@ import subprocess
 import time
 
 def start_appium_server():
-    subprocess.Popen([r'C:\Program Files\Appium\Appium.exe'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    subprocess.Popen(['appium'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    
 
     print( "Appium server started" )
     time.sleep( 5 )  # Wait for the server to start
@@ -26,7 +27,7 @@ def create_driver_session(device_name, app_path, java_class):
 
 if __name__ == '__main__':
     device_name = "R58R1207VAT"
-    app_path = "C:\\Android\\app-debug.apk"
+    app_path = "C:\\Users\\NewUser\\Desktop\\Android_Source\\AndroidBase\\app\\build\\outputs\\apk\\debug\\app-debug.apk"
     java_class = "com.awm.mcba.floridascarwash"
 
     start_appium_server()
