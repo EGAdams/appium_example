@@ -3,7 +3,8 @@ import subprocess
 import time
 
 def start_appium_server():
-    subprocess.Popen(['C:\Program Files\Appium\Appium.exe'], stdout=subprocess.PIPE, stderr=subprocess.PIPE )
+    subprocess.Popen([r'C:\Program Files\Appium\Appium.exe'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
     print( "Appium server started" )
     time.sleep( 5 )  # Wait for the server to start
 
