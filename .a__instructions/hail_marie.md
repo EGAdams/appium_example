@@ -4,95 +4,132 @@ You are a master of the Selenium Webdriver API and can write tests in your sleep
 You are an expert at using chromedriver in Android WebViews.
 
 
-The following Node JS application successfully starts an Android application that appears to be loading it's WebView normally.  The problem is that the application hangs after switching to the WebView context.
+# Goal of the day
+Start and Android process that has a WebView.  Click on buttons in the WebView.
 
-# Source Code
+# Existing Python appium server source code
+```python
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+import subprocess
+import time
+import os
+
+def start_appium_server():
+    subprocess.Popen(
+        ['appium', '--base-path', '/wd/hub'],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        shell=True
+    )
+    print("Appium server started with base path /wd/hub")
+    time.sleep(5)  # Wait for the server to start
+
+def create_driver_session(device_name, app_path, java_class, chromedriver_path):
+    options = UiAutomator2Options()
+    options.platform_name = 'Android'
+    options.platform_version = '10'
+    options.device_name = device_name
+    options.app = app_path
+    options.app_package = java_class
+    options.app_activity = 'MainActivity'
+    options.automation_name = 'UiAutomator2'
+    options.new_command_timeout = 60000
+    options.chromedriver_executable = chromedriver_path  # Specify the ChromeDriver path
+
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', options=options)
+    return driver
+
+if __name__ == '__main__':
+    device_name = "R58R1207VAT"
+    app_path = r"C:\\Users\\NewUser\Desktop\\Android_Source\\AndroidBase\\app\build\\outputs\\apk\debug\\app-debug.apk"
+    java_class = "com.awm.mcba.floridascarwash"
+
+    # Determine the absolute path to the ChromeDriver executable in node_modules
+    chromedriver_path = os.path.abspath(
+        './node_modules/chromedriver/lib/chromedriver/chromedriver'
+    )
+
+    start_appium_server()
+    driver = create_driver_session(device_name, app_path, java_class, chromedriver_path)
+
+    # Keep the server running
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        driver.quit()
+        print("Appium server stopped")
+```
+
+
+# Code to communicate with the WebView
 ```javascript
-const spawn = require( 'child_process' ).spawn;
-const java_class = "com.awm.mcba.floridascarwash";
-const device_name = "R58R1207VAT"; // "R58MC1M2H9P";
-const app_path = "C:\\Android\\app-debug.apk";
+from appium import webdriver
+from appium.options.android import UiAutomator2Options
+import subprocess
+import time
+import os
 
-class RegisterUserSMA205U {
-	constructor( wdio ) {
-		this.wdio = wdio;
-		this.opts = {
-			path: '/wd/hub',
-			port: 4723,
-			hostname: '127.0.0.1',
-			capabilities: {
-                platformName: "Android",
-                "appium:platformVersion": "10", // Updated from platformVersion
-                "appium:deviceName": device_name,
-                "appium:app": app_path,
-                "appium:appPackage": java_class,
-                "appium:appActivity": "MainActivity",
-                "appium:automationName": "UiAutomator2",
-                "appium:newCommandTimeout": 60000,
-                // "appium:chromedriverExecutable": "C:\\Android\\chromedriver.exe",
-            }
-		};
-	}
+def start_appium_server():
+    subprocess.Popen(
+        ['appium', '--base-path', '/wd/hub'],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        shell=True
+    )
+    print("Appium server started with base path /wd/hub")
+    time.sleep(5)  # Wait for the server to start
 
-	async execute () {
-		const FIRST_NAME = "Giz"
-		const LAST_NAME = "Elle"
-		const EMAIL = "giz@gmail.com"
-		const PASSWORD = "princess"
-		const client = await this.wdio.remote(this.opts);
-        let contexts = await client.getContexts();
-        console.log('Available contexts:', contexts); // Log available contexts
+def create_driver_session(device_name, app_path, java_class, chromedriver_path):
+    options = UiAutomator2Options()
+    options.platform_name = 'Android'
+    options.platform_version = '10'
+    options.device_name = device_name
+    options.app = app_path
+    options.app_package = java_class
+    options.app_activity = 'MainActivity'
+    options.automation_name = 'UiAutomator2'
+    options.new_command_timeout = 60000
+    options.chromedriver_executable = chromedriver_path  # Specify the ChromeDriver path
 
-        try {
-            contexts = await client.getContexts();
+    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', options=options)
+    return driver
 
-            let new_context = null;
-            if ( contexts[ 1 ]) {
-                if ( contexts[ 1 ].includes( 'floridascarwash' )) {
-                    console.log( "Context 1:", contexts[ 1 ] );
-                    console.log('Switching to context:', contexts[ 1 ]);
-                    await client.switchContext(contexts[ 1 ]); // switch to webview
-                    new_context = contexts[ 1 ];
-                    console.log('Switched to WebView context');
-                }
-            } else { console.log( "Context 1: contexts[ 1 ] is null" ); }
-            
-            if ( contexts[ 2 ]) {
-                if ( contexts[ 2 ].includes( 'floridascarwash' ) ) {
-                    console.log('Switching to context:', contexts[ 2 ]);
-                    await client.switchContext(contexts[ 2 ]); // switch to webview
-                    new_context = contexts[ 2 ];
-                    console.log('Switched to WebView context');
-                }
-            } else { 
-                throw new Error('WebView context not found'); }
+if __name__ == '__main__':
+    device_name = "R58R1207VAT"
+    app_path = r"C:\\Users\\NewUser\Desktop\\Android_Source\\AndroidBase\\app\build\\outputs\\apk\debug\\app-debug.apk"
+    java_class = "com.awm.mcba.floridascarwash"
 
-            const chatButton = await client.$('//*[@class="mcba_button"]');
-            console.log('Chat button found:', chatButton);
-            await chatButton.click();
-            console.log('Clicked on chat button');
-            console.log('Switching back to context:', contexts[0]);
-            await client.switchContext(contexts[0]); // switch to native context
-            console.log('Switched to native context');
-            const first_name = await client.$( '//*[@resource-id="' + java_class + ':id/field_fname"]' );
-            await first_name.setValue( FIRST_NAME );
-            const last_name = await client.$( '//*[@resource-id="' + java_class + ':id/field_lname"]' );
-            await last_name.setValue( LAST_NAME );
-            const email = await client.$( '//*[@resource-id="' + java_class + ':id/field_email"]' );
-            await email.setValue( EMAIL );
-            const password = await client.$( '//*[@resource-id="' + java_class + ':id/field_password"]' );
-            await password.setValue( PASSWORD );
-            const confirm_password = await client.$( '//*[@resource-id="' + java_class + ':id/field_confirm_password"]' );
-            await confirm_password.setValue( PASSWORD );
-            const create_account_button = await client.$( '//*[@resource-id="' + java_class + ':id/email_create_account_button"]' );
-            await create_account_button.click();
-            await client.pause( 30000 );
-            await client.pause(30000);
-        } catch ( error ) { console.error( 'Error occurred:', error );}
-	}
-}
-module.exports = RegisterUserSMA205U;
+    # Determine the absolute path to the ChromeDriver executable in node_modules
+    chromedriver_path = os.path.abspath(
+        './node_modules/chromedriver/lib/chromedriver/chromedriver'
+    )
+
+    start_appium_server()
+    driver = create_driver_session(device_name, app_path, java_class, chromedriver_path)
+
+    # Keep the server running
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        driver.quit()
+        print("Appium server stopped")
+
 ```
 
 # Your Task
-Write a Python appium server that will allow the above Node JS application to successfully switch to the WebView context and click on the chat button.
+Please guide us through the process of opening a WebView on the Android and then filling out a registration form.
+
+ONLY ONE STEP AT A TIME
+
+# Our Communication Process
+1. You suggest a step.
+2. I execute the step, and show you the results
+3. You suggest the next step in the progress to our goal.
+4. I execute the step, and show you the results.
+5. You analyze the results and let me know what the next step would be to get towards our goal.
+6. Keep repeating this process until I tell you that we have reached a goal
+
+Try to keep your answers relatively short in the beginning.  We need to take small steps so that you give me the option to add more information that we need to accomplish our goal.

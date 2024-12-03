@@ -10,7 +10,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "chromedriver": "^120.0.0",
-        "webdriverio": "^8.29.0"
+        "chromedriver": "^131.0.0",
+        "webdriverio": "^9.4.1"
     }
 }
